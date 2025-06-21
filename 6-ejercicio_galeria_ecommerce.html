@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby pink</title>
+    <style>
+        :root {
+            --primary: #7a1ae8;
+            --secondary: #137897;
+            --accent: #ea357a;
+            --background: #b49be2;
+            --surface: #72b9d4;
+            --text-primary: #000000;
+            --text-secondary: #5f6368;
+            --border: #dadce0;
+            
+            /* Espaciado fluido */
+            --space-xs: clamp(0.5rem, 2vw, 1rem);
+            --space-sm: clamp(1rem, 3vw, 1.5rem);
+            --space-md: clamp(1.5rem, 4vw, 2rem);
+            --space-lg: clamp(2rem, 5vw, 3rem);
+            --space-xl: clamp(3rem, 6vw, 4rem);
+            
+            /* Tipografía */
+            --font-sm: clamp(0.875rem, 2vw, 1rem);
+            --font-base: clamp(1rem, 2.5vw, 1.125rem);
+            --font-lg: clamp(1.125rem, 3vw, 1.25rem);
+            --font-xl: clamp(1.25rem, 3.5vw, 1.5rem);
+            --font-2xl: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        /* === HEADER === */
+        .header {
+            background: var(--surface);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: var(--space-md) 0;
+            margin-bottom: var(--space-xl);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+
+        .logo {
+            font-size: var(--font-2xl);
+            font-weight: 900;
+            color: var(--accent);
+        }
+
+        .breadcrumb {
+            font-size: var(--font-sm);
+            color: var(--text-secondary);
+        }
+
+        /* === INSTRUCCIONES DEL EJERCICIO === */
+        .exercise-instructions {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 12px;
+            padding: var(--space-lg);
+            margin-bottom: var(--space-xl);
+            border-left: 4px solid var(--primary);
+        }
+
+        .instructions-title {
+            font-size: var(--font-xl);
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+        }
+
+        .requirement-card {
+            background: rgba(255,255,255,0.8);
+            padding: var(--space-md);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .requirement-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-xs);
+        }
+
+        /* === GALERÍA DE PRODUCTOS === */
+        .products-section {
+            margin-bottom: var(--space-xl);
+        }
+
+        .section-title {
+            font-size: var(--font-2xl);
+            font-weight: 600;
+            margin-bottom: var(--space-lg);
+            text-align: center;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .product-card {
+            background: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        /* === AQUÍ ES DONDE TRABAJARÁS === */
+        .product-image-container {
+            position: relative;
+            /* TODO: Definir aspect-ratio apropiado */
+            /* TODO: Configurar overflow */
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image {
+            /* TODO: Completar estilos para imagen responsive */
+            width: 100%;
+            height: 100%;
+            /* TODO: object-fit para mantener proporción */
+            transition: transform 0.3s ease;
+            border-radius: 0;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .image-placeholder {
+            color: var(--text-secondary);
+            font-size: var(--font-lg);
+            text-align: center;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: var(--space-sm);
+            right: var(--space-sm);
+            background: var(--accent);
+            color: white;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 16px;
+            font-size: var(--font-sm);
+            font-weight: 600;
+        }
+
+        .product-content {
+            padding: var(--space-lg);
+        }
+
+        .product-title {
+            font-size: var(--font-lg);
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
+        }
+
+        .product-description {
+            font-size: var(--font-sm);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+            line-height: 1.5;
+        }
+
+        .product-price {
+            font-size: var(--font-xl);
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .product-price .original {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: var(--font-base);
+            margin-right: var(--space-xs);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: var(--space-sm);
+        }
+
+        .btn {
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            font-size: var(--font-sm);
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #bb60af;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+        /* === DEVICE INDICATOR === */
+        .device-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: rgb(179, 176, 176);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+        }
+
+        .device-indicator::before {
+            content: "📱 " attr(data-device);
+        }
+
+        /* === RESPONSIVE BREAKPOINTS === */
+        @media (max-width: 767px) {
+            .device-indicator::before { content: "📱 Mobile"; }
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .device-indicator::before { content: "💻 Tablet"; }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .device-indicator::before { content: "🖥️ Desktop"; }
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1440px) {
+            .device-indicator::before { content: "🖥️ Large Desktop"; }
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">BabyStore🌟🕶️</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Instrucciones del ejercicio -->
+        <section class="exercise-instructions">
+            <h2 class="instructions-title">🎯Misión: Amor, ternura, cuidado para los mas pequeños </h2>
+            <p style="font-size: var(--font-base); margin-bottom: var(--space-md);">
+            "Brindar a las familias ropa para bebé de alta calidad, cómoda, segura y con diseños encantadores, acompañando cada etapa del crecimiento con amor, ternura y confianza. Nos comprometemos a ofrecer prendas que no solo sean funcionales,
+            sino que también reflejen la alegría y la belleza de los momentos compartidos con los más pequeños. Nuestro objetivo es ser el aliado perfecto para las familias, proporcionando ropa que cuide y abrace a sus bebés con el máximo cariño 
+            y dedicación."
+            </p>
+            
+            <div class="requirements-grid">
+                <div class="requirement-card">
+                    <picture>
+    <!-- Imagen cuadrada para móviles -->
+    <source media="(max-width: 767px)" srcset="https://alitools.io/es/showcase/image?url=https%3A%2F%2Fae01.alicdn.com%2Fkf%2FH84d1e43c90414f3cb076f64f72357a127.jpg_480x480.jpg">
+    
+    <!-- Imagen rectangular para pantallas más grandes -->
+    <source media="(min-width: 768px)" srcset="https://alitools.io/es/showcase/image?url=https%3A%2F%2Fae01.alicdn.com%2Fkf%2FH84d1e43c90414f3cb076f64f72357a127.jpg_480x480.jpg">
+
+    <!-- Fallback para navegadores sin soporte a <source> -->
+    <img 
+        class="product-image"
+        src="https://alitools.io/es/showcase/image?url=https%3A%2F%2Fae01.alicdn.com%2Fkf%2FH84d1e43c90414f3cb076f64f72357a127.jpg_480x480.jpg"
+        srcset="https://alitools.io/es/showcase/image?url=https%3A%2F%2Fae01.alicdn.com%2Fkf%2FH84d1e43c90414f3cb076f64f72357a127.jpg_480x480.jpg 600w, https://alitools.io/es/showcase/image?url=https%3A%2F%2Fae01.alicdn.com%2Fkf%2FH84d1e43c90414f3cb076f64f72357a127.jpg_480x480.jpg 1200w"
+        sizes="(max-width: 768px) 100vw, 33vw"
+        alt="Vestido niña de verano con estampado floral, ideal para ocasiones especiales"
+        loading="lazy"
+    >
+    </picture>
+                </div>
+                
+                <div class="requirement-card">
+                    <picture>
+    <!-- Imagen cuadrada para móviles -->
+    <source media="(max-width: 767px)" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShqyeYOZVgs-3tGs7W2q2ErgiD-CtOYFMFCQ&s">
+    
+    <!-- Imagen rectangular para pantallas más grandes -->
+    <source media="(min-width: 768px)" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShqyeYOZVgs-3tGs7W2q2ErgiD-CtOYFMFCQ&s">
+
+    <!-- Fallback para navegadores sin soporte a <source> -->
+    <img 
+        class="product-image"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShqyeYOZVgs-3tGs7W2q2ErgiD-CtOYFMFCQ&s"
+        srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShqyeYOZVgs-3tGs7W2q2ErgiD-CtOYFMFCQ&s 600w, https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShqyeYOZVgs-3tGs7W2q2ErgiD-CtOYFMFCQ&s 1200w"
+        sizes="(max-width: 768px) 100vw, 33vw"
+        alt="Vestido niña de verano con estampado floral, ideal para ocasiones especiales"
+        loading="lazy"
+    >
+    </picture>
+                </div>
+                
+                <div class="requirement-card">
+                    <picture>
+    <!-- Imagen cuadrada para móviles -->
+    <source media="(max-width: 767px)" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWco-J22BUIbOXJvGKep_j-Z4BeAh_pujLZw&s">
+    
+    <!-- Imagen rectangular para pantallas más grandes -->
+    <source media="(min-width: 768px)" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWco-J22BUIbOXJvGKep_j-Z4BeAh_pujLZw&s">
+
+    <!-- Fallback para navegadores sin soporte a <source> -->
+    <img 
+        class="product-image"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWco-J22BUIbOXJvGKep_j-Z4BeAh_pujLZw&s"
+        srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWco-J22BUIbOXJvGKep_j-Z4BeAh_pujLZw&s 600w, https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWco-J22BUIbOXJvGKep_j-Z4BeAh_pujLZw&s 1200w"
+        sizes="(max-width: 768px) 100vw, 33vw"
+        alt="Vestido niña de verano con estampado floral, ideal para ocasiones especiales"
+        loading="lazy"
+    >
+    </picture>
+                </div>
+                
+                <div class="requirement-card">
+                    <picture>
+    <!-- Imagen cuadrada para móviles -->
+    <source media="(max-width: 767px)" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvUzaCNO6gAaKngJ3N27KiUTMR6UE3QD9ojg&s">
+    
+    <!-- Imagen rectangular para pantallas más grandes -->
+    <source media="(min-width: 768px)" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvUzaCNO6gAaKngJ3N27KiUTMR6UE3QD9ojg&s">
+
+    <!-- Fallback para navegadores sin soporte a <source> -->
+    <img 
+        class="product-image"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvUzaCNO6gAaKngJ3N27KiUTMR6UE3QD9ojg&s"
+        srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvUzaCNO6gAaKngJ3N27KiUTMR6UE3QD9ojg&s 600w, https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvUzaCNO6gAaKngJ3N27KiUTMR6UE3QD9ojg&s 1200w"
+        sizes="(max-width: 768px) 100vw, 33vw"
+        alt="Vestido niña de verano con estampado floral, ideal para ocasiones especiales"
+        loading="lazy"
+    >
+    </picture>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galería de productos -->
+        <section class="products-section">
+            <h2 class="section-title">Productos Destacados</h2>
+            
+            <div class="products-grid">
+                <!-- Producto 1: Smartphone -->
+                <article class="product-card">
+                    <div class="product-image-container">
+                        <!-- TODO: Reemplaza esto con picture element optimizado -->
+                        <!--  Reemplazo del TODO con picture element optimizado -->
+    <picture>
+    <!-- Imagen cuadrada para móviles -->
+    <source media="(max-width: 767px)" srcset="https://i.ebayimg.com/thumbs/images/g/~joAAOSwcOplOjKe/s-l1200.jpg">
+    
+    <!-- Imagen rectangular para pantallas más grandes -->
+    <source media="(min-width: 768px)" srcset="https://i.ebayimg.com/thumbs/images/g/~joAAOSwcOplOjKe/s-l1200.jpg">
+
+    <!-- Fallback para navegadores sin soporte a <source> -->
+    <img 
+        class="product-image"
+        src="https://i.ebayimg.com/thumbs/images/g/~joAAOSwcOplOjKe/s-l1200.jpg"
+        srcset="https://i.ebayimg.com/thumbs/images/g/~joAAOSwcOplOjKe/s-l1200.jpg 600w, https://i.ebayimg.com/thumbs/images/g/~joAAOSwcOplOjKe/s-l1200.jpg 1200w"
+        sizes="(max-width: 768px) 100vw, 33vw"
+        alt="Vestido niña de verano con estampado floral, ideal para ocasiones especiales"
+        loading="lazy"
+    >
+    </picture>
+
+                        <div class="image-placeholder"><br>
+
+                        </div>
+                        <!-- 
+                        HINT: Usa picture element con:
+                        - Móvil: imagen cuadrada 400x400
+                        - Desktop: imagen rectangular 600x400
+                        - Múltiples resoluciones con srcset
+                        - loading="lazy"
+                        -->
+                        <span class="product-badge">Nuevo</span>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Vestido Floral </h3>
+                        <p class="product-description">
+                    Disponible en tallas pequeñas,este vestido combina funcionalidad y dulzura, haciendo que tu bebé luzca siempre precios@.
+
+
+                        </p>
+                        <div class="product-price">
+                            <span class="original">$100.000</span>
+                            $89.000
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Agregar al Carrito</button>
+                            <button class="btn btn-secondary">Ver Detalles</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Producto 2: Laptop -->
+                <article class="product-card">
+                    <div class="product-image-container">
+                        <div class="image-placeholder">
+                            <br>
+                            <picture>
+    <!-- Imagen cuadrada para móviles -->
+    <source media="(max-width: 767px)" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7zV6b72Sw2ySCkXGKXp1wEgQSd-rcPBoRDM1i5drlJjBltQmol5xv3iJ55sFWG1x24Sc&usqp=CAU">
+    
+    <!-- Imagen rectangular para pantallas más grandes -->
+    <source media="(min-width: 768px)" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7zV6b72Sw2ySCkXGKXp1wEgQSd-rcPBoRDM1i5drlJjBltQmol5xv3iJ55sFWG1x24Sc&usqp=CAU">
+
+    <!-- Fallback para navegadores sin soporte a <source> -->
+    <img 
+        class="product-image"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7zV6b72Sw2ySCkXGKXp1wEgQSd-rcPBoRDM1i5drlJjBltQmol5xv3iJ55sFWG1x24Sc&usqp=CAU"
+        srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7zV6b72Sw2ySCkXGKXp1wEgQSd-rcPBoRDM1i5drlJjBltQmol5xv3iJ55sFWG1x24Sc&usqp=CAU 600w,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7zV6b72Sw2ySCkXGKXp1wEgQSd-rcPBoRDM1i5drlJjBltQmol5xv3iJ55sFWG1x24Sc&usqp=CAU 1200w"
+        sizes="(max-width: 768px) 100vw, 33vw"
+        alt="Vestido niña de rayas con detalles de encaje, ideal para ocasiones especiales"
+        loading="lazy"
+    >
+    </picture>
+                        </div>
+                        <span class="product-badge" style="background: var(--secondary);">Oferta</span>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Vestido Rayas</h3>
+                        <p class="product-description">
+                            Su diseño a rayas en tonos suaves aporta un look fresco y moderno, perfecto tanto para el día a día como para salidas especiales.
+                        </p>
+                        <div class="product-price">
+                            <span class="original">$140.000</span>
+                            $120.000
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Agregar al Carrito</button>
+                            <button class="btn btn-secondary">Ver detalles</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Producto 3: Auriculares -->
+                <article class="product-card">
+                    <div class="product-image-container">
+                        <div class="image-placeholder">
+                            <br>
+    <picture>
+    <!-- Imagen cuadrada para móviles -->
+    <source media="(max-width: 767px)" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSghE1k7utJgVz2yuHU8KRnjPI82V9XzS516g&s">
+    
+    <!-- Imagen rectangular para pantallas más grandes -->
+    <source media="(min-width: 768px)" srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSghE1k7utJgVz2yuHU8KRnjPI82V9XzS516g&s">
+
+    <!-- Fallback para navegadores sin soporte a <source> -->
+    <img 
+        class="product-image"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSghE1k7utJgVz2yuHU8KRnjPI82V9XzS516g&s"
+        srcset="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSghE1k7utJgVz2yuHU8KRnjPI82V9XzS516g&s 600w,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSghE1k7utJgVz2yuHU8KRnjPI82V9XzS516g&s"
+        sizes="(max-width: 768px) 100vw, 33vw"
+        alt="Sudadera Oso con capucha, ideal para climas fríos"
+        loading="lazy"
+    >
+    </picture>
+                        </div>
+                        <span class="product-badge" style="background: var(--primary);">Premium</span>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Sudadera Oso</h3>
+                        <p class="product-description">
+                            Un básico versátil que no puede faltar en el armario de tu pequeño, combinando funcionalidad y un estilo encantador.
+                        </p>
+                        <div class="product-price">$80.000</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Agregar al Carrito</button>
+                            <button class="btn btn-secondary">Ver detalles </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Producto 4: Smartwatch -->
+                <article class="product-card">
+                    <div class="product-image-container">
+                        <div class="image-placeholder"><br>
+                            <picture>
+    <!-- Imagen cuadrada para móviles -->
+    <source media="(max-width: 767px)" srcset="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/da1d54eece9d7f0d527083d4d207554c.jpg?imageView2/2/w/375/q/50/format/webp">
+    
+    <!-- Imagen rectangular para pantallas más grandes -->
+    <source media="(min-width: 768px)" srcset="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/da1d54eece9d7f0d527083d4d207554c.jpg?imageView2/2/w/375/q/50/format/webp">
+
+    <!-- Fallback para navegadores sin soporte a <source> -->
+    <img 
+        class="product-image"
+        src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/da1d54eece9d7f0d527083d4d207554c.jpg?imageView2/2/w/375/q/50/format/webp"
+        srcset="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/da1d54eece9d7f0d527083d4d207554c.jpg?imageView2/2/w/375/q/50/format/webp 600w,https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/da1d54eece9d7f0d527083d4d207554c.jpg?imageView2/2/w/375/q/50/format/webp"
+        sizes="(max-width: 768px) 100vw, 33vw"
+        alt="Overol niño Dino, ideal para aventuras al aire libre"
+        loading="lazy"
+    >
+    </picture>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Overol niño Dino</h3>
+                        <p class="product-description">
+                            Perfecto para el parque, la escuela o cualquier día lleno de aventuras.
+                        </p>
+                        <div class="product-price">79.900</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Agregar al Carrito</button>
+                            <button class="btn btn-secondary">Ver detalles</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    <footer style="background: #f3e8ff; padding: 2rem 1rem; text-align: center; font-size: 0.9rem; color: #555;">
+    <div class="container" style="max-width: 1200px; margin: auto;">
+    <p style="font-weight: bold; font-size: 1.1rem; margin-bottom: 1rem;">👶© 2023 BabyStore. Todos los derechos reservados.</p>
+            
+        
+    <script>
+        // Verificar implementación
+        function checkImplementation() {
+            const pictures = document.querySelectorAll('picture');
+            const imagesWithSrcset = document.querySelectorAll('img[srcset]');
+            const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+            
+            console.log(`
+📊 ESTADO DE TU IMPLEMENTACIÓN:
+• Picture elements: ${pictures.length}
+• Imágenes con srcset: ${imagesWithSrcset.length}
+• Imágenes con lazy loading: ${lazyImages.length}
+
+${pictures.length > 0 ? '✅' : '❌'} Picture elements implementados
+${imagesWithSrcset.length > 0 ? '✅' : '❌'} Srcset implementado
+${lazyImages.length > 0 ? '✅' : '❌'} Lazy loading implementado
+            `);
+        }
+
+        // Verificar cada 5 segundos
+        setInterval(checkImplementation, 5000);
+        
+        // Verificación inicial
+        setTimeout(checkImplementation, 2000);
+    </script>
+</body>
+</html>
